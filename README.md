@@ -1,0 +1,142 @@
+# 오프라인 RAG 기반 Java 분석 챗봇 시스템
+
+이 프로젝트는 Java 프로젝트의 클래스/메서드 정보를 분석하여 벡터화하고, 로컬 LLM(LLaMA2)을 통해 자연어로 질의응답할 수 있는 RAG(Retrieval-Augmented Generation) 기반 챗봇입니다.  
+SI 프로젝트 환경에서도 사용할 수 있도록 **외부 인터넷 연결 없이 완전 오프라인으로 작동**하도록 설계했습니다.
+
+---
+
+## 사용 기술 스택
+
+| 구성 요소         | 기술명                                  |
+|------------------|------------------------------------------|
+| 프론트엔드       | React (Vite)                             |
+| 백엔드 (RAG 서버) | Python, FastAPI, LangChain               |
+| 백엔드 (분석기)   | Java, Spring Boot, JavaParser            |
+| LLM              | LLaMA2 (로컬, Ollama 사용)               |
+| 임베딩           | HuggingFace Embeddings (MiniLM)          |
+| 벡터 DB          | FAISS (로컬 인덱스 저장)                |
+
+---
+
+## 디렉토리 구조
+
+```
+project-root/
+├── rag-server/        # FastAPI 기반 RAG 서버 (Python)
+├── java-parser/       # Java 코드 분석기 (Spring Boot)
+├── react-ui/          # React 기반 사용자 UI
+├── models/            # 로컬 LLaMA 모델 저장 경로
+├── vector_index/      # FAISS 인덱스 저장소
+└── README.md
+```
+
+---
+
+## 아키텍처 다이어그램
+
+```mermaid
+flowchart TD
+    A[Java 프로젝트<br>파서 (Spring Boot)] --> B[클래스/메서드 JSON 추출]
+    B --> C[FastAPI 기반 RAG 서버]
+    C --> D[HuggingFace 임베딩 수행]
+    D --> E[FAISS 벡터 저장소]
+    C --> F[LLM 응답 생성 (Ollama LLaMA2)]
+    G[사용자 질문 (React UI)] --> C
+    F --> H[자연어 응답 반환]
+
+    subgraph RAG 서버 구성
+        C
+        D
+        E
+        F
+    end
+```
+
+---
+
+## 실행 방법
+
+### 1. Java 분석기 실행
+
+```bash
+cd java-parser
+./gradlew bootRun
+```
+
+### 2. RAG 서버 실행 (FastAPI)
+
+```bash
+cd rag-server
+uvicorn main:app --reload
+```
+
+### 3. React UI 실행
+
+```bash
+cd react-ui
+npm install
+npm run dev
+```
+
+### 4. Java 코드 전송 API
+
+```http
+POST http://localhost:8000/rag/init
+Content-Type: application/json
+
+{
+  "projectId": "example-project",
+  "parsedClasses": [ ... ]
+}
+```
+
+### 5. 질문 API 호출
+
+```http
+POST http://localhost:8000/ask
+Content-Type: application/json
+
+{
+  "question": "UserController에 어떤 메소드가 있나요?"
+}
+```
+
+---
+
+## 개발 배경
+
+- SI 프로젝트는 보안상 외부 LLM(OpenAI 등) 사용이 어려운 경우가 많습니다.
+- Java 프로젝트 구조를 빠르게 파악하기 어려운 신규 투입 인력에게 도움이 되도록 설계했습니다.
+- 이 시스템은 로컬 분석기 + 벡터 저장소 + 로컬 LLM으로 구성되어 완전한 오프라인 환경에서도 사용 가능합니다.
+- 프로젝트 구조와 메서드 정보를 자연어로 질의응답할 수 있어 문서화 + Q&A 자동화를 실현할 수 있습니다.
+
+---
+
+## 특징 및 장점
+
+- 인터넷 없이도 사용 가능한 완전 오프라인 구성
+- 기존 Java 프로젝트 그대로 분석 가능
+- 프론트엔드는 React로 구성되어 사용이 간편함
+- FastAPI 기반으로 확장성 있는 API 서버 구조
+- 신규 투입 인력을 위한 빠른 코드 구조 파악 지원
+
+---
+
+## 향후 개선 예정
+
+- 다양한 파일 포맷(Markdown, PDF 등) 분석 지원
+- Embedding 엔진 최신화 (langchain-huggingface 적용 예정)
+- Docker 기반 배포 스크립트 추가
+- 문서 Chunking 전략 개선
+- 모델 선택 및 상태 확인 UI 기능 추가
+
+---
+
+## 주의 사항
+
+- `models/` 디렉토리에 LLaMA2 모델이 존재해야 합니다  
+  (예: `ollama pull llama2` 명령어로 설치)
+- Python 3.10 이상, Java 17 이상, Node.js 18 이상 권장
+- `vector_index/` 디렉토리는 없으면 자동 생성됩니다
+
+---

@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - java-parser
+
+  java-parser:
+    build:
+      context: ./java-parser
+    ports:
+      - "8080:8080"
+    depends_on:
+      - rag-server
+
+  rag-server:
+    build:
+      context: ./rag-server
+    ports:
+      - "8000:8000"
+    depends_on:
+      - ollama
+
+  ollama:
+    build:
+      context: .
+      dockerfile: ollama.Dockerfile
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+
+volumes:
+  ollama-data:

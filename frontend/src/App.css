@@ -1,0 +1,23 @@
+/* src/App.css */
+  .app-container {
+    display: flex;
+    height: 100vh;
+  }
+  .sidebar {
+    width: 260px;
+    background: #f4f6fa;
+    padding: 16px;
+    border-right: 1px solid #ddd;
+  }
+  .main {
+    flex: 1;
+    padding: 24px;
+    overflow-y: auto;
+  }
+  .structure {
+    margin-bottom: 32px;
+  }
+  .chatbot {
+    border-top: 1px solid #eee;
+    padding-top: 16px;
+  }
