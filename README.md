@@ -6,10 +6,19 @@ SI 프로젝트 환경에서도 사용할 수 있도록 **외부 인터넷 연�
 ---
 
 <img width="1920" alt="스크린샷 2025-06-22 오후 2 45 25" src="https://github.com/user-attachments/assets/d1992272-91ce-42b7-a525-532b7dabb0bd" />
+프로젝트 메인화면
+
 <img width="1920" alt="스크린샷 2025-06-22 오후 2 45 54" src="https://github.com/user-attachments/assets/13af9d68-2822-4b43-86f5-c49c0b92d5d5" />
+실제 분석할 자바 프로젝트 등록
+
 <img width="1920" alt="스크린샷 2025-06-22 오후 2 46 03" src="https://github.com/user-attachments/assets/5a12bcf3-4859-4a54-8b82-d03a129f4673" />
+분석된 자바 메소드 목록
+
 <img width="1920" alt="스크린샷 2025-06-22 오후 2 47 27" src="https://github.com/user-attachments/assets/e133fca7-ab31-4f3c-818d-01e33460fec7" />
+로컬LLM을 통해 메소드 상세 내용 검색 기능1
+
 <img width="1920" alt="스크린샷 2025-06-22 오후 2 48 31" src="https://github.com/user-attachments/assets/7054e1b3-6dfc-44d2-9ca3-21e15ce1880b" />
+로컬LLM을 통해 메소드 상세 내용 검색 기능2
 
 ---
 
@@ -40,72 +49,25 @@ project-root/
 
 ---
 
-## 아키텍처 다이어그램
 
-flowchart TD
-    A[Java 프로젝트<br>파서 (Spring Boot)] --> B[클래스/메서드 JSON 추출]
-    B --> C[FastAPI 기반 RAG 서버]
-    C --> D[HuggingFace 임베딩 수행]
-    D --> E[FAISS 벡터 저장소]
-    C --> F[LLM 응답 생성 (Ollama LLaMA2)]
-    G[사용자 질문 (React UI)] --> C
-    F --> H[자연어 응답 반환]
-
-    subgraph RAG 서버 구성
-        C
-        D
-        E
-        F
-    end
-
----
 
 ## 실행 방법
 
 ### 1. Java 분석기 실행
 
-```bash
-cd java-parser
-./gradlew bootRun
-```
-
 ### 2. RAG 서버 실행 (FastAPI)
 
 ```bash
-cd rag-server
 uvicorn main:app --reload
 ```
 
 ### 3. React UI 실행
 
 ```bash
-cd react-ui
 npm install
 npm run dev
 ```
 
-### 4. Java 코드 전송 API
-
-```http
-POST http://localhost:8000/rag/init
-Content-Type: application/json
-
-{
-  "projectId": "example-project",
-  "parsedClasses": [ ... ]
-}
-```
-
-### 5. 질문 API 호출
-
-```http
-POST http://localhost:8000/ask
-Content-Type: application/json
-
-{
-  "question": "UserController에 어떤 메소드가 있나요?"
-}
-```
 
 ---
 
