@@ -8,10 +8,10 @@ SI 프로젝트 환경에서도 사용할 수 있도록 **외부 인터넷 연�
 <img width="1920" alt="스크린샷 2025-06-22 오후 2 45 25" src="https://github.com/user-attachments/assets/d1992272-91ce-42b7-a525-532b7dabb0bd" />
 프로젝트 메인화면
 
-<img width="1920" alt="스크린샷 2025-06-22 오후 2 45 54" src="https://github.com/user-attachments/assets/13af9d68-2822-4b43-86f5-c49c0b92d5d5" />
+<img width="1920" alt="스크린샷 2025-06-22 오후 2 45 54" src="https://github.com/user-attachments/assets/4dff0344-344b-4f12-bd63-e04f6aeac859" />
 실제 분석할 자바 프로젝트 등록
 
-<img width="1920" alt="스크린샷 2025-06-22 오후 2 46 03" src="https://github.com/user-attachments/assets/5a12bcf3-4859-4a54-8b82-d03a129f4673" />
+<img width="1916" alt="스크린샷 2025-06-22 오후 2 46 03" src="https://github.com/user-attachments/assets/af081463-7e46-4138-9d58-ce5cacb1e092" />
 분석된 자바 메소드 목록
 
 <img width="1920" alt="스크린샷 2025-06-22 오후 2 47 27" src="https://github.com/user-attachments/assets/e133fca7-ab31-4f3c-818d-01e33460fec7" />
