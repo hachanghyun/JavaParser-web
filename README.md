@@ -34,7 +34,6 @@ project-root/
 
 ## 아키텍처 다이어그램
 
-```mermaid
 flowchart TD
     A[Java 프로젝트<br>파서 (Spring Boot)] --> B[클래스/메서드 JSON 추출]
     B --> C[FastAPI 기반 RAG 서버]
@@ -50,7 +49,6 @@ flowchart TD
         E
         F
     end
-```
 
 ---
 
