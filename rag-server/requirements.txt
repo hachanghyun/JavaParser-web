@@ -4,3 +4,4 @@ faiss-cpu
 ollama
 fastapi
 uvicorn
+langchain-ollama
